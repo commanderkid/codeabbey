@@ -1,31 +1,38 @@
 from math import *
 
 
-
-def schitatel(A, B, C, D, n = 1, x = 1, staroe = uravnenie):
+def schitatel(A, B, C, D, staroe, n = 1, x = 1):
     uravnenie = A * x + B * sqrt(pow(x, 3)) - C * exp(-x/50) - D
 
-    if uravnenie > 0 and uravnenie < 0.00000001:
+    if uravnenie > 0 and uravnenie < 0.000000001:
+        #print("1 x=", x, " n=", n, " staroe=", staroe, " uravnenie=", uravnenie)
         return x
 
     elif uravnenie < 0 and staroe < 0:
-        return schitatel(A, B, C, D, n, x * 10, staroe = uravnenie)
+        staroe = uravnenie
+        #print("2 x=", x, " n=", n, " staroe=", staroe, " uravnenie=", uravnenie)
+        return schitatel(A, B, C, D, staroe, n, x * 10)
 
     elif uravnenie > 0 and staroe < 0:
         n = x / 10
         x -= n
-        return schitatel(A, B, C, D, n, x, staroe = uravnenie)
+        staroe = uravnenie
+        #print("3 x=", x, " n=", n, " staroe=", staroe, " uravnenie=", uravnenie)
+        return schitatel(A, B, C, D, staroe, n, x)
 
     elif staroe > uravnenie and uravnenie > 0:
         x -= n
-        return schitatel(A, B, C, D, n, x, staroe = uravnenie)
+        staroe = uravnenie
+        #print("4 x=", x, " n=", n, " staroe=", staroe, " uravnenie=", uravnenie)
+        return schitatel(A, B, C, D, staroe, n, x)
 
     elif uravnenie < 0 and staroe > 0:
         x += n
         n = n / 10
         x -= n
-        return schitatel(A, B, C, D, n, x, staroe)
-
+        #print("5 x=", x, " n=", n, " staroe=", staroe, " uravnenie=", uravnenie)
+        return schitatel(A, B, C, D, staroe, n, x)
+    print("Promazal")
 
 #x = 0
 #uravnenie = A * x + B * sqrt(pow(x, 3)) - C * exp(-x/50) - D
@@ -39,7 +46,7 @@ for i in range(n):
     B = mass[1]
     C = mass[2]
     D = mass[3]
-    uravnenie = A * x + B * sqrt(pow(x, 3)) - C * exp(-x/50) - D
-    bolsh.append(str(schitatel(A, B, C, D, n = 1, x = 1, staroe = uravnenie)))
+    staroe = A * x + B * sqrt(pow(x, 3)) - C * exp(-x/50) - D
+    bolsh.append(str(schitatel(A, B, C, D, staroe, n = 1, x = 1)))
 
 print(" ".join(bolsh))
